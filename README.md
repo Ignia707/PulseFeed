@@ -1,4 +1,4 @@
-# Gatekeep
+# PulseFeed
 
 A minimal full-stack authentication & role-based authorization demo — built to learn how a React frontend and an Express/MongoDB backend talk to each other using JWTs.
 
