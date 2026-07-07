@@ -1,4 +1,4 @@
-
+// Auth controller
 
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
@@ -109,7 +109,58 @@ const loginUser = async(req, res) => {
     }
 }
 
+// changePassword controller
+const changePassword = async(req, res) => {
+    try {
+        const userId = req.userInfo.userId;
+
+        // extract old and new password
+        const { oldPassword, newPassword } = req.body;
+        console.log();
+        
+        // find the current logged in user
+        const user = await User.findById(userId);
+        if(!user) {
+            return res.status(400).json({
+                success : false,
+                message : 'User not found'
+            });
+        }
+
+        // check if old password is correct
+        const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+        if(!isPasswordMatch) {
+            return res.status(400).json({
+                success : false,
+                message : 'Entered old password is incorrect'
+            });
+        }
+
+        // hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const newHashedPassword = await bcrypt.hash(newPassword, salt);
+        
+        // update user password
+        user.password = newHashedPassword;
+        await user.save();
+
+        res.status(200).json({
+            success : true,
+            message : 'Password changed successfully'
+        }); 
+
+    } catch(err) {
+        console.error(err);
+        res.status(500).json({
+            success : false,
+            message : 'Something went wrong. Please try again.'
+        });
+
+    }
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    changePassword
 };
