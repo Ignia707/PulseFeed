@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Navbar.css";
 
@@ -6,8 +6,13 @@ import "./Navbar.css";
 function Navbar() {
 
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   
-  const handleClick = () => logout(); 
+  // return the user to home and then logout
+  const handleClick = () => {
+    navigate('/');
+    logout();
+  } 
 
   return (
     <nav className="navbar">
@@ -32,9 +37,12 @@ function Navbar() {
         
         { // if any user logged in - for logout
         (user && (
+          <>
+          <Link to="/image/get">Images</Link>
           <button onClick={handleClick} type="button">
             Logout
           </button>
+          </>
         ))}
 
       </div>

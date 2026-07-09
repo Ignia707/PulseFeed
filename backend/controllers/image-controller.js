@@ -51,7 +51,7 @@ const fetchImagesController = async(req, res) => {
     try {
         // Pagination and Sorting
         const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 1;
+        const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit; // skip the initial images to display next set of images 
  
         const sortBy = req.query.sortBy || 'createdAt';
