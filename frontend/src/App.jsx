@@ -5,7 +5,7 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Unauthorized from "./pages/Unauthorized";
-import ImagesPanel from "./pages/ImagesPanel";
+import Gallery from "./pages/Gallery";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
@@ -21,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/unauthorized" element={<Unauthorized />}/>
-        <Route path="/image/get" element={<ImagesPanel />} />
+        <Route path="/image/get" element={<Gallery />} />
       </Routes>
     </BrowserRouter>
   );

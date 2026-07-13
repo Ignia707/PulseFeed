@@ -55,13 +55,44 @@ const fetchImages = async(token) => {
     const fetchOptionData = {
         method : 'GET',
         headers : {},
+        query : {
+            all : true,
+        }
+    }
+
+    return await fetchAPI(fetchOptionData, '/image/get?all=true', token);
+}
+const fetchMyImages = async(token) => {
+    const fetchOptionData = {
+        method : 'GET',
+        headers : {},
+        query : {
+            all : true,
+        }
     }
 
     return await fetchAPI(fetchOptionData, '/image/get', token);
 }
 
+const uploadImage = async(token, imageFile) => {
+    // build the formData object to upload 
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    const fetchOptionData = {
+        method : 'POST',
+        // no headers - browser handles Content-Type itself
+        headers : {},
+        body : formData
+    }
+
+    return await fetchAPI(fetchOptionData, '/image/upload', token);
+}
+
 export {
     registerUser, 
     loginUser,
-    fetchImages
+    fetchImages,
+    fetchMyImages,
+    uploadImage
 };

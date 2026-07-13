@@ -14,7 +14,6 @@ const { uploadImageController,
 // upload image
 router.post('/upload', 
     authMiddleware, 
-    adminMiddleware, 
     uploadMiddleware.single('image'), uploadImageController);
 
 // to get all the images

@@ -57,13 +57,24 @@ const fetchImagesController = async(req, res) => {
         const sortBy = req.query.sortBy || 'createdAt';
         const sortOrder = req.query.sortOrder === "asc" ? 1 : -1;
 
-        const totalImages = await Image.countDocuments();
-        const totalPages = Math.ceil(totalImages / limit);
-
         const sortObj = {};
         sortObj[sortBy] = sortOrder;
+        
+        // filter 
+        const filter = {};
+        if(!req.query.all) {
+            const userId = req.userInfo.userId;
+            filter.uploadedBy = userId;
+        }
 
-        const images = await Image.find().sort(sortObj).skip(skip).limit(limit);
+        const totalImages = await Image.countDocuments(filter);
+        const totalPages = Math.ceil(totalImages / limit);
+
+        const images = await Image.find(filter)
+        .sort(sortObj)
+        .skip(skip)
+        .limit(limit);
+
         if(images) {
             res.status(200).json({
                 success : true,
@@ -89,7 +100,6 @@ const deleteImageController = async(req, res) => {
         // getting imageId of image
         // getting userId of user trying to delete it
         const getCurrentImageId = req.params.id;
-        const userId = req.userInfo.userId;
 
         const image = await Image.findById(getCurrentImageId);
         if(!image) {
@@ -100,12 +110,13 @@ const deleteImageController = async(req, res) => {
         }
 
         // check if image is uploaded by the current user
-        if(image.uploadedBy.toString() !== userId) {
-            return res.status(403).json({
-                success : false,
-                message : 'You are not authorized to delete this image'
-            });
-        }
+        // const userId = req.userInfo.userId;
+        // if(image.uploadedBy.toString() !== userId) {
+        //     return res.status(403).json({
+        //         success : false,
+        //         message : 'You are not authorized to delete this image'
+        //     });
+        // }
 
         // delete the image from cloudinary 
         await cloudinary.uploader.destroy(image.publicId);

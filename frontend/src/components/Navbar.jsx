@@ -38,7 +38,7 @@ function Navbar() {
         { // if any user logged in - for logout
         (user && (
           <>
-          <Link to="/image/get">Images</Link>
+          <Link to="/image/get">Gallery</Link>
           <button onClick={handleClick} type="button">
             Logout
           </button>
