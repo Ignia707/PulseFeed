@@ -4,7 +4,6 @@ import { loginUser } from "../api";
 import { useAuth } from "../context/AuthContext";
 import "./AuthForm.css";
 
-
 function Login() {
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -27,11 +26,9 @@ function Login() {
       login(result.user, result.accessToken);
       navigate("/");
 
-      console.log('User logged in successfully');
-      
-    } catch(err) {
-      console.error('ERROR in login: ', err);
-      
+      console.log("User logged in successfully");
+    } catch (err) {
+      console.error("ERROR in login: ", err);
     }
   };
 
