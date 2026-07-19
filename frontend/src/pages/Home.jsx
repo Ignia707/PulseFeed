@@ -10,16 +10,16 @@ import { UploadForm } from "../components/UploadForm";
 function Home() {
   const { token } = useAuth();
 
-  const { images, isLoading, error, fetchImageHelper } = useImages(
+  const { images, isLoading, error, refetchImages } = useImages(
     fetchMyImages,
     token,
   );
 
   return (
     <div className="page-container">
-      <div>
+      <div className="page-header">
         <h1>My Images</h1>
-        <UploadForm onUploadSuccess={fetchImageHelper} />
+        <UploadForm onUploadSuccess={refetchImages} />
       </div>
       <ImageGrid images={images} isLoading={isLoading} error={error} />
     </div>

@@ -1,35 +1,47 @@
 // Upload image component
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { uploadImage } from "../api";
+import "./UploadForm.css";
 
 function UploadForm({ onUploadSuccess }) {
   const { token } = useAuth();
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState(null);
+  const [status, setStatus] = useState(null); // { type: 'success' | 'error', message: string }
+  const fileInputRef = useRef(null);
 
-  // select file event handler
+  // auto-dismiss the status popup after a few seconds
+  useEffect(() => {
+    if (!status) return;
+    const timer = setTimeout(() => setStatus(null), 3000);
+    return () => clearTimeout(timer);
+  }, [status]);
+
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    setSelectedFile(e.target.files[0] || null);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!selectedFile) {
-      throw Error("No image selected! Please select an image");
-    }
+    if (!selectedFile) return;
 
     const uploadImageHelper = async (token) => {
       try {
         setUploading(true);
+        setStatus(null);
         await uploadImage(token, selectedFile);
         await onUploadSuccess(token);
-        console.log("Image Uploaded successfully");
+
+        setStatus({ type: "success", message: "Image uploaded!" });
+
+        // clear the selection so the button disappears and the
+        // native file input resets (inputs can't be cleared via state alone)
+        setSelectedFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
       } catch (err) {
-        setError(err);
+        setStatus({ type: "error", message: "Upload failed. Try again." });
         console.error(err);
       } finally {
         setUploading(false);
@@ -39,16 +51,30 @@ function UploadForm({ onUploadSuccess }) {
   };
 
   return (
-    <>
+    <div className="upload-form">
       <form onSubmit={handleSubmit}>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        <button type="submit" disabled={uploading}>
-          Upload
-        </button>
+        <label className="file-label">
+          {selectedFile ? selectedFile.name : "Choose Image"}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            hidden
+          />
+        </label>
+
+        {selectedFile && (
+          <button type="submit" className="upload-btn" disabled={uploading}>
+            {uploading ? "Uploading..." : "Upload"}
+          </button>
+        )}
       </form>
-      {uploading && <p>Uploading...</p>}
-      {error && <p>Error uploading image</p>}
-    </>
+
+      {status && (
+        <div className={`upload-toast ${status.type}`}>{status.message}</div>
+      )}
+    </div>
   );
 }
 

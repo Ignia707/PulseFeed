@@ -8,7 +8,7 @@ function useImages(fetchFn, token) {
   const [error, setError] = useState(null);
 
   // define it outside to return
-  const fetchImageHelper = async (token) => {
+  const refetchImages = async (token) => {
     try {
       setIsLoading(true);
       const imagesData = await fetchFn(token);
@@ -23,10 +23,23 @@ function useImages(fetchFn, token) {
   };
 
   useEffect(() => {
-    fetchImageHelper(token);
+    const fetchImageHelper = async (token) => {
+      try {
+        const imagesData = await fetchFn(token);
+        setImages(imagesData.data);
+        console.log("Images fetched sucessfully");
+      } catch (err) {
+        setError(err);
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchImageHelper(token, false);
   }, []);
 
-  return { images, isLoading, error, fetchImageHelper };
+  return { images, isLoading, error, refetchImages };
 }
 
 export { useImages };

@@ -16,10 +16,10 @@ A minimal full-stack authentication & role-based authorization demo — built to
 **Backend:** Node.js, Express, MongoDB (Mongoose), JWT, bcrypt
 **Frontend:** React (Vite), React Router, Context API
 
-
 ## Running locally
 
 **Backend**
+
 ```bash
 cd backend
 npm install
@@ -27,6 +27,7 @@ npm start
 ```
 
 **Frontend**
+
 ```bash
 cd frontend
 npm install
