@@ -21,7 +21,12 @@ function Home() {
         <h1>My Images</h1>
         <UploadForm onUploadSuccess={refetchImages} />
       </div>
-      <ImageGrid images={images} isLoading={isLoading} error={error} />
+      <ImageGrid
+        images={images}
+        isLoading={isLoading}
+        error={error}
+        onDeleteSuccess={refetchImages}
+      />
     </div>
   );
 }

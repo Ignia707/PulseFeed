@@ -31,6 +31,7 @@ function UploadForm({ onUploadSuccess }) {
       try {
         setUploading(true);
         setStatus(null);
+
         await uploadImage(token, selectedFile);
         await onUploadSuccess(token);
 
@@ -40,6 +41,8 @@ function UploadForm({ onUploadSuccess }) {
         // native file input resets (inputs can't be cleared via state alone)
         setSelectedFile(null);
         if (fileInputRef.current) fileInputRef.current.value = "";
+
+        console.log("Image uploaded");
       } catch (err) {
         setStatus({ type: "error", message: "Upload failed. Try again." });
         console.error(err);

@@ -1,0 +1,77 @@
+.delete-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: none;
+  background: rgba(20, 20, 20, 0.75);
+  color: #f87171;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    background 0.15s ease;
+  z-index: 5;
+}
+
+.image-card:hover .delete-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delete-btn:hover {
+  background: rgba(211, 47, 47, 0.85);
+  color: white;
+}
+
+.delete-btn:disabled {
+  cursor: not-allowed;
+}
+
+.delete-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.delete-toast {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  z-index: 6;
+}
+
+.delete-toast.error {
+  background: rgba(211, 47, 47, 0.9);
+  color: white;
+}

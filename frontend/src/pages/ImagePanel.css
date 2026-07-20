@@ -40,6 +40,7 @@
 }
 
 .image-card:hover {
+  position: relative;
   transform: translateY(-3px);
   border-color: #646cff;
 }
