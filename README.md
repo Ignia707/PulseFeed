@@ -38,8 +38,7 @@ Set `VITE_BACKEND_API_URL` in `frontend/.env` and `MONGO_URI` / `JWT_SECRET` / `
 
 ## Next milestones
 
+- [x] Image uploads, delete - role based
 - [ ] Admin panel: view/manage users, change roles
-- [ ] Posts feature: create/read posts, admin moderation
-- [ ] Image uploads on posts
 
 ---
