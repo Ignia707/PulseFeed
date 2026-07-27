@@ -68,7 +68,7 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     // find if current user is in the database
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -98,11 +98,14 @@ const loginUser = async (req, res) => {
       },
     );
 
+    const userResponse = user.toObject();
+    delete userResponse.password;
+
     res.status(200).json({
       success: true,
       message: "Logged in successfully",
       accessToken,
-      user,
+      userResponse,
     });
   } catch (err) {
     console.error(err);
