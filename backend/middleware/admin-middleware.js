@@ -1,21 +1,21 @@
-// Admin middleware to protect admi route
+// Admin middleware to protect admin route
 
 const isAdminUser = (req, res, next) => {
-    if(!req.userInfo) {
-        return res.status(401).json({
-            success: false,
-            message: 'Unauthorized'
-        });
-    }
+  if (!req.userInfo) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
+  }
 
-    if(req.userInfo.role !== 'admin') {
-        return res.status(403).json({
-            success : false,
-            message : 'Access denied! Admin rights required'
-        });
-    }
+  if (req.userInfo.role === "user") {
+    return res.status(403).json({
+      success: false,
+      message: "Access denied! Admin or higher rights required",
+    });
+  }
 
-    next();
-}
+  next();
+};
 
 module.exports = isAdminUser;
