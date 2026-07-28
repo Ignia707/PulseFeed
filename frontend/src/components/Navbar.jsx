@@ -45,6 +45,11 @@ function Navbar() {
                 Admin
               </NavLink>
             )}
+            {user.role === "superadmin" && (
+              <NavLink to="/superadmin" className={linkClass}>
+                Superadmin
+              </NavLink>
+            )}
           </>
         )}
       </div>

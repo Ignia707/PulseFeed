@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api";
 import "./AuthForm.css";
 
@@ -10,7 +9,9 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "user",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,9 +23,10 @@ function Register() {
 
     try {
       const result = await registerUser(formData);
+      navigate("/login");
       console.log("Register submitted:", result);
     } catch (err) {
-      console.error('ERROR in submission: ', err);
+      console.error("ERROR in submission: ", err);
     }
   };
 

@@ -48,6 +48,74 @@ const loginUser = async (data) => {
   return await fetchAPI(fetchOptionData, "/auth/login");
 };
 
+const fetchUsers = async (token, page = 1, limit = 10) => {
+  const fetchOptionData = {
+    method: "GET",
+    headers: {},
+    query: {
+      all: true,
+    },
+  };
+
+  return await fetchAPI(
+    fetchOptionData,
+    `/admin/users?page=${page}?limit=${limit}`,
+    token,
+  );
+};
+
+const fetchUsersAdmins = async (token, page = 1, limit = 10) => {
+  const fetchOptionData = {
+    method: "GET",
+    headers: {},
+    query: {
+      all: true,
+    },
+  };
+
+  return await fetchAPI(
+    fetchOptionData,
+    `/superadmin/users?page=${page}?limit=${limit}`,
+    token,
+  );
+};
+
+const promoteUser = async (userId, token) => {
+  const fetchOptionData = {
+    method: "PATCH",
+    headers: {},
+  };
+
+  return await fetchAPI(fetchOptionData, `/admin/users/${userId}`, token);
+};
+
+const demoteUser = async (userId, token) => {
+  const fetchOptionData = {
+    method: "PATCH",
+    headers: {},
+  };
+
+  return await fetchAPI(fetchOptionData, `/superadmin/users/${userId}`, token);
+};
+
+const deleteUser = async (userId, token) => {
+  const fetchOptionData = {
+    method: "DELETE",
+    headers: {},
+  };
+
+  return await fetchAPI(fetchOptionData, `/admin/users/${userId}`, token);
+};
+
+const deleteUserAdmin = async (userId, token) => {
+  const fetchOptionData = {
+    method: "DELETE",
+    headers: {},
+  };
+
+  return await fetchAPI(fetchOptionData, `/superadmin/users/${userId}`, token);
+};
+
 // to fetch images - the user just needs to have a valid token
 const fetchImages = async (token) => {
   const fetchOptionData = {
@@ -60,6 +128,7 @@ const fetchImages = async (token) => {
 
   return await fetchAPI(fetchOptionData, "/image/get?all=true", token);
 };
+
 const fetchMyImages = async (token) => {
   const fetchOptionData = {
     method: "GET",
@@ -96,9 +165,17 @@ const deleteImage = async (imageId, token) => {
   return fetchAPI(fetchOptionData, `/image/${imageId}`, token);
 };
 
+// fetchUsers fetchUsersAdmins promoteUser demoteUser
+
 export {
   registerUser,
   loginUser,
+  fetchUsers,
+  fetchUsersAdmins,
+  promoteUser,
+  demoteUser,
+  deleteUser,
+  deleteUserAdmin,
   fetchImages,
   fetchMyImages,
   uploadImage,

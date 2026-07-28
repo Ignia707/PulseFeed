@@ -17,7 +17,7 @@ function ImageGrid({ images, isLoading, error, onDeleteSuccess }) {
           {images.map((image) => (
             <div key={image.publicId} className="image-card">
               <img src={image.url} alt="Uploaded" className="image" />
-              {user.role === "admin" && (
+              {(user.role === "admin" || user.role === "superadmin") && (
                 <DeleteButton
                   imageId={image._id}
                   onDeleteSuccess={onDeleteSuccess}

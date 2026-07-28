@@ -105,7 +105,8 @@ const loginUser = async (req, res) => {
       success: true,
       message: "Logged in successfully",
       accessToken,
-      userResponse,
+      // avoid naming mismatch
+      user: userResponse,
     });
   } catch (err) {
     console.error(err);
