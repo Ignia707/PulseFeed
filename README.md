@@ -36,9 +36,4 @@ npm run dev
 
 Set `VITE_BACKEND_API_URL` in `frontend/.env` and `MONGO_URI` / `JWT_SECRET` / `FRONTEND_URL` in `backend/.env` before running.
 
-## Next milestones
-
-- [x] Image uploads, delete - role based
-- [ ] Admin panel: view/manage users, change roles
-
 ---
