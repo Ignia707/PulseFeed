@@ -1,20 +1,25 @@
 # PulseFeed
 
-A minimal full-stack authentication & role-based authorization demo — built to learn how a React frontend and an Express/MongoDB backend talk to each other using JWTs.
+A full-stack authentication & role-based authorization demo — built to learn how a React frontend and an Express/MongoDB backend talk to each other using JWTs.
 
-## What it does
+## What it offers
 
 - Register and log in with email/password
-- JWT-based auth (token issued on login, required for protected routes)
-- Role-based access: regular `user` vs `admin`
-- Protected frontend routes (redirect to login if logged out, redirect to unauthorized if wrong role)
-- Persistent login across page refresh (`localStorage`)
-- Conditional navbar based on auth state
+- JWT-based auth
+- Three-tier role system: `user` → `admin` → `superadmin`, with admins able to promote users and superadmins demote admins
+- Image uploads (any logged-in user) via Cloudinary, with a personal gallery and a public gallery
+- Admin-only image moderation (delete)
+- Admin/Superadmin dashboards for managing user roles
 
 ## Tech stack
 
-**Backend:** Node.js, Express, MongoDB (Mongoose), JWT, bcrypt
-**Frontend:** React (Vite), React Router, Context API
+- **Backend:** Node.js, Express, MongoDB (Mongoose), JWT, bcrypt, Multer, Cloudinary
+- **Frontend:** React (Vite), React Router, Context API
+
+## Deployments
+
+- Frontend: Vercel
+- Backend: Render
 
 ## Running locally
 
@@ -34,6 +39,15 @@ npm install
 npm run dev
 ```
 
-Set `VITE_BACKEND_API_URL` in `frontend/.env` and `MONGO_URI` / `JWT_SECRET` / `FRONTEND_URL` in `backend/.env` before running.
+## NOTE
+
+- Set `VITE_BACKEND_API_URL` in `frontend/.env` (must include the `/api` prefix, e.g. `http://localhost:3000/api`)
+
+- `MONGO_URI` / `JWT_SECRET` / `FRONTEND_URL` / Cloudinary credentials in `backend/.env` before running.
+
+## Next Features
+
+- [ ] Image download
+- [ ] Full-scale image view lightbox overlay
 
 ---
