@@ -1,3 +1,6 @@
+// App.jsx - the root component
+
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -9,8 +12,21 @@ import Unauthorized from "./pages/Unauthorized";
 import Gallery from "./pages/Gallery";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
+import { notifyBackend } from "./api";
 
 function App() {
+  useEffect(() => {
+    const wakeUpBackend = async () => {
+      try {
+        const res = await notifyBackend();
+        console.log("Backend notified:", res);
+      } catch (err) {
+        console.error("Backend warm-up failed:", err);
+      }
+    };
+
+    wakeUpBackend();
+  }, []);
   return (
     <BrowserRouter>
       <Navbar />

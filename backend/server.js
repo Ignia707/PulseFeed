@@ -14,6 +14,7 @@ const homeRoutes = require("./routes/home-routes");
 const adminRoutes = require("./routes/admin-routes");
 const superAdminRoutes = require("./routes/superadmin-routes");
 const uploadImageRoutes = require("./routes/image-routes");
+const helperRoutes = require("./routes/helper-routes");
 
 connectToDB();
 
@@ -31,6 +32,7 @@ app.use("/api/home", homeRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/image", uploadImageRoutes);
 app.use("/api/superadmin", superAdminRoutes);
+app.use("/api/helper", helperRoutes);
 
 // Run the app
 app.listen(PORT, () => {

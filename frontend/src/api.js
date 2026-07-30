@@ -165,6 +165,16 @@ const deleteImage = async (imageId, token) => {
   return fetchAPI(fetchOptionData, `/image/${imageId}`, token);
 };
 
+// helper endpoints
+const notifyBackend = async () => {
+  const fetchOptionData = {
+    method: "GET",
+    headers: {},
+  };
+
+  return fetchAPI(fetchOptionData, `/helper/health`);
+};
+
 // fetchUsers fetchUsersAdmins promoteUser demoteUser
 
 export {
@@ -180,4 +190,5 @@ export {
   fetchMyImages,
   uploadImage,
   deleteImage,
+  notifyBackend,
 };
